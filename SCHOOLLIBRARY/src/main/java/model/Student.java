@@ -1,9 +1,7 @@
 package model;
 
-import enums.StudentType;
-
 public class Student extends Person{
-
+    private Book book;
    final private String studentId;
 
     public Student(String firstName, String lastName, String emailAddress, String studentId) {
@@ -15,10 +13,17 @@ public class Student extends Person{
         return studentId;
     }
 
+
+    public void setBookRequest(Book book) {
+        this.book = book;
+    }
+    public Book getBookRequested() {
+        return book;
+    }
+
+
     @Override
     public String toString() {
-        return "Student{" +super.toString()+
-                "studentId='" + studentId + '\'' +
-                '}';
+        return (getFirstName() + " " + getLastName() + " " + getStudentId());
     }
 }
