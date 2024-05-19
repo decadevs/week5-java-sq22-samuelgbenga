@@ -8,8 +8,12 @@ import java.util.ArrayList;
 public class LibraryServiceImpl implements LibraryService {
 
     // request pool
-    private final ArrayList<ArrayList<Object>> requestPool = new ArrayList<>();
-
+    private ArrayList<ArrayList<Object>> requestPool = new ArrayList<>();
+    // set by priority
+    private final ArrayList<ArrayList<Object>> teacherPriority = new ArrayList<>();
+    private final ArrayList<ArrayList<Object>> snrStudentPriority = new ArrayList<>();
+    private final ArrayList<ArrayList<Object>> jnrStudentPriority = new ArrayList<>();
+    private boolean isSortByPriority = false;
 
 // checks if the book exist in the arrays list
     private  boolean checkBook(Book requestedBook, ArrayList<ArrayList<Object>> bookInventory) {
@@ -62,6 +66,11 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public void assignBook(ArrayList<ArrayList<Object>> books) {
 
+        if(isSortByPriority){
+             sortedByPriority();
+        }
+
+        assert requestPool != null;
         for (ArrayList<Object> requester : requestPool) {
             Book requestedBook = (Book) requester.get(1);
             if(checkBook(requestedBook, books)) {
@@ -77,12 +86,60 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
 
+// this method arranged them accordingly in order of priority
+    private void sortedByPriority() {
+        requestPool.addAll(teacherPriority);
+        requestPool.addAll(snrStudentPriority);
+        requestPool.addAll(jnrStudentPriority);
+
+    }
+
+    // sort the request by first come, first served
+
     @Override
     public <T> void setRequestPool( T requester, Book book) {
         ArrayList<Object> request = new ArrayList<>();
         request.add(requester);
         request.add(book);
         requestPool.add(request);
+    }
+
+    // sort the request by priority because of tie
+    @Override
+    public <T> void setRequestPool(T requester, Book book, String requesterId) {
+        int priority = requesterId.charAt(3)-'0';
+        //System.out.println(priority);
+        switch (priority){
+            case 1: {
+                ArrayList<Object> request = new ArrayList<>();
+                request.add(requester);
+                request.add(book);
+                teacherPriority.add(request);
+                //System.out.println("Teacher priority added");
+                break;
+            }
+            case 2: {
+                ArrayList<Object> request = new ArrayList<>();
+                request.add(requester);
+                request.add(book);
+                snrStudentPriority.add(request);
+               // System.out.println("Senior Student priority added");
+                break;
+            }
+            case 3: {
+                ArrayList<Object> request = new ArrayList<>();
+                request.add(requester);
+                request.add(book);
+                jnrStudentPriority.add(request);
+                //System.out.println("JNR Student priority added");
+                break;
+            }
+            default:
+                System.out.println("Invalid priority");
+                break;
+        }
+
+        isSortByPriority = true;
     }
 
 }

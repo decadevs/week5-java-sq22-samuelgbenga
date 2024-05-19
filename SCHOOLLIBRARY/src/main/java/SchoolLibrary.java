@@ -17,7 +17,7 @@ public class SchoolLibrary {
 
         Student student = new Student("firstName",
                 "secondName", "email", "jnr323");
-        Student student1 = new Student("samuel", "Joseph", "email", "snr323");
+        Student student1 = new Student("samuel", "Joseph", "email", "snr223");
 
         // teacher object
         Teacher teacher = new Teacher("firstName","lastName", "emaill", "tch123");
@@ -51,8 +51,14 @@ public class SchoolLibrary {
         libraryService.setRequestPool(student1, student1.bookRequest(book2));
         libraryService.setRequestPool(teacher1, teacher1.bookRequest(book3));
         libraryService.setRequestPool(student, student.bookRequest(book3));
-        libraryService.setRequestPool(teacher1, teacher1.bookRequest(book3));
+        libraryService.setRequestPool(teacher, teacher.bookRequest(book3), teacher.getTeacherId());
+        libraryService.setRequestPool(student, student.bookRequest(book1), student.getStudentId());
+         libraryService.setRequestPool(teacher1, teacher1.bookRequest(book3));
+        System.out.println("************");
+        libraryService.setRequestPool(teacher, teacher.bookRequest(book3), teacher.getTeacherId());
 
+          libraryService.setRequestPool(teacher1, teacher1.bookRequest(book2), teacher1.getTeacherId());
+          libraryService.setRequestPool(student1, student1.bookRequest(book3), student1.getStudentId());
 
 
         // assign the books
