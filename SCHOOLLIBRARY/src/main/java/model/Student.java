@@ -14,11 +14,9 @@ public class Student extends Person{
     }
 
 
-    public void setBookRequest(Book book) {
+    public Book bookRequest(Book book) {
         this.book = book;
-    }
-    public Book getBookRequested() {
-        return book;
+        return this.book;
     }
 
 
