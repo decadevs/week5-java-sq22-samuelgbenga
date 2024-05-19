@@ -2,6 +2,9 @@ package service;
 
 import model.Book;
 
+import java.util.ArrayList;
+
 public interface LibraryService {
-    public<T, V> String assignBook(T requester, V requestedBook, Book[] books);
+    public<T> String assignBook(T requester, Book requestedBook, ArrayList<ArrayList<Object>> bookInventory);
+
 }

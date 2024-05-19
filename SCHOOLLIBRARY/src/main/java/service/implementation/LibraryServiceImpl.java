@@ -3,20 +3,29 @@ package service.implementation;
 import model.Book;
 import service.LibraryService;
 
+import java.util.ArrayList;
+
 public class LibraryServiceImpl implements LibraryService {
 
+// checks if the book exist in the arrays list
+    public  boolean checkBook(Book requestedBook, ArrayList<ArrayList<Object>> bookInventory) {
+        ArrayList<Book> books = new ArrayList<>();
 
-    public <T> boolean checkBook(T requestedBook, Book[] books) {
-        boolean result = false;
-        for (Book book : books) {
-            result = book.equals(requestedBook);
-            if(result) break;
+        for (ArrayList<Object> book : bookInventory) {
+            books.add((Book) book.getFirst());
         }
-        return result;
+        //System.out.println(books);
+        for(Book book : books) {
+            if(book.equals(requestedBook)) {
+                return true;
+            }
+        }
+        return false;
     }
 
+    // assigns the book upon existing
     @Override
-    public <T, V> String assignBook(T requester, V requestedBook, Book[] books) {
+    public <T> String assignBook(T requester, Book requestedBook, ArrayList<ArrayList<Object>> books) {
        if(checkBook(requestedBook, books)) {
            return "Assign the book '"+requestedBook+"' "+ requester;
        }
