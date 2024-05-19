@@ -14,21 +14,26 @@ public class LibraryServiceImpl implements LibraryService {
 // checks if the book exist in the arrays list
     private  boolean checkBook(Book requestedBook, ArrayList<ArrayList<Object>> bookInventory) {
         ArrayList<Book> books = new ArrayList<>();
-        deleteBook(bookInventory);
-        for (ArrayList<Object> book : bookInventory) {
-            books.add((Book) book.getFirst());
-        }
-        //System.out.println(books);
-        int indexOfBook = 0;
-        for(Book book : books) {
-            if(book.equals(requestedBook)) {
-                //System.out.println(indexOfBook);
-                decreaseNoOfBook(indexOfBook, bookInventory);
-                return true;
+        try {
+            deleteBook(bookInventory);
+            for (ArrayList<Object> book : bookInventory) {
+                books.add((Book) book.getFirst());
             }
-            indexOfBook++;
+            //System.out.println(books);
+            int indexOfBook = 0;
+            for(Book book : books) {
+                if(book.equals(requestedBook)) {
+                    //System.out.println(indexOfBook);
+                    decreaseNoOfBook(indexOfBook, bookInventory);
+                    return true;
+                }
+                indexOfBook++;
+            }
+            return false;
         }
-        return false;
+        catch (Exception e){
+            return false;
+        }
     }
 
     // decrease the number of books upon borrow
@@ -41,7 +46,8 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     // delete the book from inventory upon number equal to zero
-    private void deleteBook(ArrayList<ArrayList<Object>> bookInventory) {
+    private void deleteBook(ArrayList<ArrayList<Object>> bookInventory) throws  Exception{
+
         for (ArrayList<Object> book : bookInventory) {
             //System.out.println(book.get(1));
             int bookNo = (int)book.get(1);
@@ -50,7 +56,6 @@ public class LibraryServiceImpl implements LibraryService {
             }
         }
     }
-
 
 
     // assigns the book upon existing
@@ -80,7 +85,4 @@ public class LibraryServiceImpl implements LibraryService {
         requestPool.add(request);
     }
 
-    private ArrayList<ArrayList<Object>> getRequestPool(){
-        return requestPool;
-    }
 }
