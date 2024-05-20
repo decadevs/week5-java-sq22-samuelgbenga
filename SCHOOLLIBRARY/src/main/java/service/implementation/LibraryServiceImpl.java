@@ -9,8 +9,8 @@ import java.util.Iterator;
 public class LibraryServiceImpl implements LibraryService {
 
     // request pool
-    private final ArrayList<ArrayList<Object>> requestPoolFcfs = new ArrayList<>();
-    private final ArrayList<ArrayList<Object>> requestPoolPriority = new ArrayList<>();
+    private final ArrayList<ArrayList<Object>> requestPool = new ArrayList<>();
+
     // set by priority
     private final ArrayList<ArrayList<Object>> teacherPriority = new ArrayList<>();
     private final ArrayList<ArrayList<Object>> snrStudentPriority = new ArrayList<>();
@@ -101,16 +101,12 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public void assignBook(ArrayList<ArrayList<Object>> books) {
         sortedByPriority();
-        // performs the assignment of books upon
-        // request pool completion and book inventory provided sort
-        // assign student books based on FCFS
-        if(!requestPoolFcfs.isEmpty()) {
-             assignEngine(books, requestPoolFcfs);
+        // performs the assignment of books upon after setting up
+        // and scheduling the request pool
+        if(!requestPool.isEmpty()) {
+             assignEngine(books, requestPool);
         }
-        // assign books to student based on priority
-//        if(!requestPoolPriority.isEmpty()) {
-//           assignEngine(books, requestPoolPriority);
-//        }
+
 
 
     }
@@ -118,11 +114,11 @@ public class LibraryServiceImpl implements LibraryService {
 
 // this method arranged them accordingly in order of priority
     private void sortedByPriority() {
-        requestPoolFcfs.addAll(teacherPriority);
+        requestPool.addAll(teacherPriority);
         teacherPriority.clear();
-        requestPoolFcfs.addAll(snrStudentPriority);
+        requestPool.addAll(snrStudentPriority);
         snrStudentPriority.clear();
-        requestPoolFcfs.addAll(jnrStudentPriority);
+        requestPool.addAll(jnrStudentPriority);
         jnrStudentPriority.clear();
 
     }
@@ -135,7 +131,7 @@ public class LibraryServiceImpl implements LibraryService {
         ArrayList<Object> request = new ArrayList<>();
         request.add(requester);
         request.add(book);
-        requestPoolFcfs.add(request);
+        requestPool.add(request);
 
     }
 
