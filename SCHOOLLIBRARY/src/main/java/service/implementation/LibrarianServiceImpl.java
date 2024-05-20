@@ -8,9 +8,6 @@ import java.util.ArrayList;
 public class LibrarianServiceImpl implements LibrarianService {
 
     ArrayList<ArrayList<Object>> bookInventory= new ArrayList<>();
-            public LibrarianServiceImpl() {
-                //bookInventory.add("Title,Author,ISBN,NoOfBooks");
-            }
 
 
             public void addBookToInventory(Book book, int noOfBook) {

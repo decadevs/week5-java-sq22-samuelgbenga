@@ -50,7 +50,7 @@ public class SchoolLibrary {
         // service implementation
         // book inventory
         LibrarianServiceImpl librarianService = new LibrarianServiceImpl();
-        librarianService.addBookToInventory(book1,5);
+        librarianService.addBookToInventory(book1,1);
         librarianService.addBookToInventory(book2,5);
         librarianService.addBookToInventory(book3, 5);
 //        librarianService.addBookToInventory(book4, 5);
